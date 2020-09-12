@@ -12,8 +12,8 @@ from linebot.models import (
 
 app = Flask(__name__)
 
-line_bot_api = LineBotApi('YOUR_CHANNEL_ACCESS_TOKEN')
-handler = WebhookHandler('YOUR_CHANNEL_SECRET')
+line_bot_api = LineBotApi(channel_access_token)
+handler = WebhookHandler(channel_secret)
 
 @app.route("/")
 def test():
@@ -40,9 +40,36 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    if event.message.text == "ありがとう":
+        reply_message = "さぎ"
+    elif event.message.text == "さよなら":
+        reply_message = "いおん"
+    elif event.message.text == "こんにちは":
+        reply_message = "ん"
+    elif event.message.text == "こんばんわ":
+        reply_message = "に"
+    elif event.message.text == "魔法の言葉で楽しい仲間が":
+        reply_message = "ぽぽぽぽ～ん"
+    elif event.message.text == "おはよう":
+        reply_message = "なぎ"
+    elif event.message.text == "いただき":
+        reply_message = "まうす"
+    elif event.message.text == "いってきます":
+        reply_message = "かんく"
+    elif event.message.text == "ただいま":
+        reply_message = "んぼう"
+    elif event.message.text == "ごちそうさま":
+        reply_message = "うす"
+    elif event.message.text == "おやすみなさい":
+        reply_message = "さい"
+    elif event.message.text == "すてきな言葉でゆかいな仲間が":
+        reply_message = "ぽぽぽーん"
+    else:
+        reply_message = event.message.text
+
     line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=event.message.text))
+            event.reply_token,
+            TextSendMessage(text=reply_message))
 
 
 if __name__ == "__main__":
